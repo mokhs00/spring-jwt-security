@@ -61,7 +61,7 @@ public class TokenProvider implements InitializingBean {
         return Jwts.builder()
                 .setSubject(authentication.getName()) // subject : 토큰 제목
                 .claim(AUTHORITIES_KEY, authorities) // auth : authorities ... 를 넣겠다. claim = 청구
-                .signWith(key, SignatureAlgorithm.ES512) // sign 암호화
+                .signWith(key, SignatureAlgorithm.HS512) // sign 암호화
                 .setExpiration(validity) // 파기 시간
                 .compact(); // 생성 = build()
     }
