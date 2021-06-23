@@ -3,6 +3,7 @@ package com.example.springjwtsecurity.service;
 import com.example.springjwtsecurity.domain.Authority;
 import com.example.springjwtsecurity.domain.User;
 import com.example.springjwtsecurity.dto.RegisterCommand;
+import com.example.springjwtsecurity.dto.UserResponse;
 import com.example.springjwtsecurity.repository.UserJpaRepository;
 import com.example.springjwtsecurity.util.SecurityUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +24,7 @@ public class UserService {
     }
 
     @Transactional
-    public User signup(RegisterCommand dto) {
+    public UserResponse signup(RegisterCommand dto) {
         if (this.userJpaRepository.findOneWithAuthoritiesByUsername(dto.getUsername())
                 .isPresent()) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
@@ -41,7 +42,7 @@ public class UserService {
                 .activated(true)
                 .build();
 
-        return this.userJpaRepository.save(user);
+        return new UserResponse(this.userJpaRepository.save(user));
     }
 
     @Transactional(readOnly = true)
