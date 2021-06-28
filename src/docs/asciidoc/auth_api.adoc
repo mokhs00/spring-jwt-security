@@ -1,0 +1,36 @@
+:rootDir: ../../../
+
+:baseDir: {rootDir}/build/generated-snippets/auth
+
+= RESTful Notes API Guide
+:doctype: user
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:sectnums:
+:sectanchors:
+
+NOTE: REST DOCS TEST
+
+TIP: context path가 존재합니다. -> /api
+
+== AUTH
+
+=== 로그인
+
+CURL
+include::{baseDir}/curl-request.adoc[]
+
+HTTP
+include::{baseDir}/http-request.adoc[]
+include::{baseDir}/http-response.adoc[]
+
+Request
+include::{baseDir}/request-body.adoc[]
+include::{baseDir}/request-fields.adoc[]
+
+Response
+include::{baseDir}/response-body.adoc[]
+include::{baseDir}/response-fields.adoc[]

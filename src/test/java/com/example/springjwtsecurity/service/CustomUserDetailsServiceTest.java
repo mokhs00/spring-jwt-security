@@ -32,7 +32,7 @@ public class CustomUserDetailsServiceTest {
     private UserJpaRepository userJpaRepository;
 
 
-    @Test
+//    @Test
     public void loadUserByUsername() {
         // given
         User user = new User(1L, "user", "pwd1", "mokhs", true,
