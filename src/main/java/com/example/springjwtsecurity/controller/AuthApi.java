@@ -4,6 +4,8 @@ import com.example.springjwtsecurity.dto.LoginCommand;
 import com.example.springjwtsecurity.dto.TokenDto;
 import com.example.springjwtsecurity.jwt.JwtFilter;
 import com.example.springjwtsecurity.jwt.TokenProvider;
+import com.example.springjwtsecurity.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,24 +25,17 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 public class AuthApi {
 
-    private final TokenProvider tokenProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final AuthService authService;
 
-    public AuthApi(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
-        this.tokenProvider = tokenProvider;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
+    public AuthApi(AuthService authService) {
+        this.authService = authService;
     }
-
 
     @PostMapping
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginCommand dto) {
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = tokenProvider.createToken(authentication);
+        String jwt = this.authService.authorize(dto);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
